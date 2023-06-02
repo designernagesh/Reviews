@@ -1,6 +1,9 @@
 import data from './data/data';
-import './App.css';
 import { useState } from 'react';
+import { BsFillArrowLeftSquareFill, BsFillArrowRightSquareFill } from 'react-icons/bs';
+import { Container, Heading, Flex, Box, Image, Text, Button } from '@chakra-ui/react';
+import '@fontsource/raleway/400.css';
+import '@fontsource/open-sans/700.css';
 
 function App() {
   const [ index, setIndex ] = useState(0);
@@ -38,25 +41,35 @@ function App() {
     setIndex(checkNumber(randomNumber));
   }
   return (
-    <>
-      <h1>Reviews</h1>
-      <div className="reviews-wrapper">
-        <button className='btn-prev' onClick={ prevReview }> Previous </button>
-        <ul className='reviews-wrapper'>
-          {
-            <li key={data[index].id}>
-              <img src={data[index].image} alt={data[index].name} />
-              <h3>{data[index].name}</h3>
-              <span>{data[index].job}</span>
-              <p>{data[index].text}</p>
-            </li>
-          }
-        </ul>
-        <button className='btn-prev' onClick={ nextReview }> Next </button>
-      </div>
+    <Container maxW='4xl'>
+      <Heading as='h1' align='center' my='30px'>Reviews</Heading>
+      <Flex alignItems='center' mb='20px'>
+        <Button variant='link' onClick={ prevReview } fontSize='32px' mr='20px'> <BsFillArrowLeftSquareFill /> </Button>
+        <Box boxShadow='lg' p='6' rounded='md' bg='white'>
+            {
+              <Box key={data[index].id} align='center'>
+                <Image
+                  borderRadius='full'
+                  w='150px'
+                  h='150px'
+                  objectFit='cover'
+                  src={data[index].image}
+                  alt={data[index].name}
+                  mb='20px'
+                />
+                <Heading as='h5' mb='5px' fontSize='16px' textTransform='capitalize'>{data[index].name}</Heading>
+                <Text fontWeight='bold' mb='5px' color='gray.500'>{data[index].job}</Text>
+                <Text>{data[index].text}</Text>
+              </Box>
+            }
+        </Box>
+        <Button variant='link' onClick={ nextReview } fontSize='32px' ml='20px'> <BsFillArrowRightSquareFill /> </Button>
+      </Flex>
 
-      <button className='btn-random' onClick={ randomReview }> Random Review </button>
-    </>
+      <Flex justifyContent='center'>
+        <Button onClick={ randomReview }> Random Review </Button>
+      </Flex>
+    </Container>
   );
 }
 
